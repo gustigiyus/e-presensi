@@ -15,9 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
+// Posisi user tidak login
+Route::middleware(['guest:karyawan'])->group(function () {
+    Route::get('/', function () {
+        return view('auth.login');
+    })->name('login');
+    Route::post('/proseslogin', [AuthController::class, 'proseslogin']);
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::post('/proseslogin', [AuthController::class, 'proseslogin']);
+// Posisi user login
+Route::middleware(['auth:karyawan'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/proseslogout', [AuthController::class, 'proseslogout']);
+});
