@@ -22,20 +22,19 @@
 
 <body style="background-color:#e9ecef;">
 
+    @yield('header')
+
     <!-- loader -->
     <div id="loader">
         <div class="spinner-border text-primary" role="status"></div>
     </div>
     <!-- * loader -->
 
-
-
-    <!-- App Capsule -->
+    <!-- Content -->
     <div id="appCapsule">
         @yield('content')
     </div>
-    <!-- * App Capsule -->
-
+    <!-- * Content -->
 
     @include('layouts.bottomNav')
 
