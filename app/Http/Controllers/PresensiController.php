@@ -6,6 +6,7 @@ use App\Models\Karyawan;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -201,8 +202,8 @@ class PresensiController extends Controller
 
         // echo $bulan . "" . $tahun;
 
-        $histori = Presensi::whereRaw('MONTH(tgl_presnesi)="' . $bulan . '"')
-            ->whereRaw('YEAR(tgl_presnesi)="' . $tahun . '"')
+        $histori = Presensi::whereRaw('MONTH(tgl_presensi)="' . $bulan . '"')
+            ->whereRaw('YEAR(tgl_presensi)="' . $tahun . '"')
             ->where('nik', $nik)
             ->orderBy('tgl_presensi')
             ->get();
@@ -220,5 +221,28 @@ class PresensiController extends Controller
     public function izinadd()
     {
         return view('presensi.izinadd');
+    }
+
+    public function storeizin(Request $request)
+    {
+        $nik = Auth::guard('karyawan')->user()->nik;
+        $status = $request->status;
+        $tgl_izin = $request->tgl_izin;
+        $keterangan = $request->keterangan;
+
+        $data = [
+            'nik' => $nik,
+            'status' => $status,
+            'tgl_izin' => $tgl_izin,
+            'keterangan' => $keterangan,
+        ];
+
+        $simpan = DB::table('pengajuan_izin')->insert($data);
+
+        if ($simpan) {
+            return redirect('/presensi/izin')->with(['success' => 'Data Berhasil Disimpan']);
+        } else {
+            return redirect('/presensi/izin')->with(['error' => 'Data Gagal Disimpan']);
+        }
     }
 }

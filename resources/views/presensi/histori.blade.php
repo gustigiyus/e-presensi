@@ -72,12 +72,11 @@
             $('#getData').click(function() {
                 const bulan = $('#bulan').val()
                 const tahun = $('#tahun').val()
-
                 $.ajax({
                     type: 'POST',
                     url: '/gethistori',
-                    data {
-                        _token: {{ csrf_token() }},
+                    data: {
+                        _token: "{{ csrf_token() }}",
                         bulan: bulan,
                         tahun: tahun,
                     },

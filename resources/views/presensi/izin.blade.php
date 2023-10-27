@@ -15,6 +15,26 @@
 @endsection
 
 @section('content')
+    <div class="row" style="margin-top: 70px">
+        <div class="col">
+            @php
+                $messageSuccess = Session::get('success');
+                $messageError = Session::get('error');
+            @endphp
+
+            @if (Session::get('success'))
+                <div class="alert alert-success">
+                    {{ $messageSuccess }}
+                </div>
+            @endif
+
+            @if (Session::get('error'))
+                <div class="alert alert-error">
+                    {{ $messageError }}
+                </div>
+            @endif
+        </div>
+    </div>
     <div class="fab-button bottom-right" style="margin-bottom: 70px">
         <a href="/presensi/izinadd" class="fab">
             <ion-icon name="add-outline"></ion-icon>

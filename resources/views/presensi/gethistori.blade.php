@@ -2,8 +2,8 @@
     <div class="alert alert-outline-warning">
         <span>Data Belum Ada</span>
     </div>
-@endif)
-@foreach ($gethistori as $d)
+@endif
+@foreach ($histori as $d)
     <ul class="listview image-listview">
         <li>
             <div class="item">
