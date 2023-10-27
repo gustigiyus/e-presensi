@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 class PresensiController extends Controller
@@ -126,5 +129,96 @@ class PresensiController extends Controller
         $kilometers = $miles * 1.609344;
         $meters = $kilometers * 1000;
         return compact('meters');
+    }
+
+    public function editprofile()
+    {
+        $nik = Auth::guard('karyawan')->user()->nik;
+        $karyawan = Karyawan::where('nik', $nik)->first();
+
+        return view('presensi.editprofile', [
+            'karyawan' => $karyawan
+        ]);
+    }
+
+    public function updateprofile(Request $request)
+    {
+        $nik = Auth::guard('karyawan')->user()->nik;
+        $nama_lengkap = $request->nama_lengkap;
+        $no_hp = $request->no_hp;
+        $password = Hash::make($request->password);
+
+        $dt_karyawan = Karyawan::where('nik', $nik)->first();
+
+        if ($request->hasFile('foto')) {
+            $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
+        } else {
+            $foto = $dt_karyawan->foto;
+        }
+
+        if (empty($request->password)) {
+            $data = [
+                'nama_lengkap' => $nama_lengkap,
+                'no_hp' => $no_hp,
+                'foto' => $foto,
+            ];
+        } else {
+            $data = [
+                'nama_lengkap' => $nama_lengkap,
+                'no_hp' => $no_hp,
+                'password' => $password,
+                'foto' => $foto,
+            ];
+        }
+
+        $update = Karyawan::where('nik', $nik)->update($data);
+        if ($update) {
+            if ($request->hasFile('foto')) {
+                $folderPath = 'public/upload/karyawan';
+                $request->file('foto')->storeAs($folderPath, $foto);
+            }
+
+            return Redirect::back()->with(['success' => 'Data berhasil di update']);
+        } else {
+            return Redirect::back()->with(['error' => 'Data gagal di update']);
+        }
+    }
+
+    public function histori()
+    {
+        $namabulan = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+        return view('presensi.histori', [
+            'namabulan' => $namabulan
+        ]);
+    }
+
+    public function gethistori(Request $request)
+    {
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+        $nik = Auth::guard('karyawan')->user()->nik;
+
+        // echo $bulan . "" . $tahun;
+
+        $histori = Presensi::whereRaw('MONTH(tgl_presnesi)="' . $bulan . '"')
+            ->whereRaw('YEAR(tgl_presnesi)="' . $tahun . '"')
+            ->where('nik', $nik)
+            ->orderBy('tgl_presensi')
+            ->get();
+
+        return view('presensi.gethistori', [
+            'histori' => $histori
+        ]);
+    }
+
+    public function izin()
+    {
+        return view('presensi.izin');
+    }
+
+    public function izinadd()
+    {
+        return view('presensi.izinadd');
     }
 }

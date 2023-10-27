@@ -29,7 +29,19 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/proseslogout', [AuthController::class, 'proseslogout']);
 
-    //! Presensi
+    // Presensi Absen
     Route::get('/presensi/create', [PresensiController::class, 'create']);
     Route::post('/presensi/store', [PresensiController::class, 'store']);
+
+    // Edit Profile
+    Route::get('/editprofile', [PresensiController::class, 'editprofile']);
+    Route::post('/presensi/{nik}/updateprofile', [PresensiController::class, 'updateprofile']);
+
+    // Histori
+    Route::get('/presensi/histori', [PresensiController::class, 'histori']);
+    Route::post('/gethistori', [PresensiController::class, 'gethistori']);
+
+    // Izin/Sakit
+    Route::get('/presensi/izin', [PresensiController::class, 'izin']);
+    Route::get('/presensi/izinadd', [PresensiController::class, 'izinadd']);
 });
