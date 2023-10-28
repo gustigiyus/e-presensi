@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -34,6 +35,14 @@ class DashboardController extends Controller
             ->orderBy('jam_in')
             ->get();
 
+        $rekapizin = DB::table('pengajuan_izin')
+            ->selectRaw('SUM(IF(status="i",1,0)) as jml_izin, SUM(IF(status="s",1,0)) as jml_sakit')
+            ->whereRaw('MONTH(tgl_izin)="' . $bulanini . '"')
+            ->whereRaw('YEAR(tgl_izin)="' . $tahunini . '"')
+            ->where('nik', $nik)
+            ->where('status_approved', 1)
+            ->first();
+
         $namabln = ["", "Januari", "Febuari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
         return view('dashboard.dashboard', [
@@ -43,7 +52,8 @@ class DashboardController extends Controller
             'bulanini' => $bulanini,
             'tahunini' => $tahunini,
             'rekappresensi' => $rekappresensi,
-            'leaderboard' => $leaderboard
+            'leaderboard' => $leaderboard,
+            'rekapizin' => $rekapizin
         ]);
     }
 }

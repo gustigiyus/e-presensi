@@ -24,7 +24,7 @@
                 <div class="list-menu">
                     <div class="item-menu text-center">
                         <div class="menu-icon">
-                            <a href="" class="green" style="font-size: 40px;">
+                            <a href="/editprofile" class="green" style="font-size: 40px;">
                                 <ion-icon name="person-sharp"></ion-icon>
                             </a>
                         </div>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="item-menu text-center">
                         <div class="menu-icon">
-                            <a href="" class="danger" style="font-size: 40px;">
+                            <a href="/presensi/izin" class="danger" style="font-size: 40px;">
                                 <ion-icon name="calendar-number"></ion-icon>
                             </a>
                         </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="item-menu text-center">
                         <div class="menu-icon">
-                            <a href="" class="warning" style="font-size: 40px;">
+                            <a href="/presensi/histori" class="warning" style="font-size: 40px;">
                                 <ion-icon name="document-text"></ion-icon>
                             </a>
                         </div>
@@ -135,7 +135,7 @@
                     <div class="card">
                         <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 1rem">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 3px; right: 0.6rem; z-index: 999;">0</span>
+                                style="position: absolute; top: 3px; right: 0.6rem; z-index: 999;">{{ $rekapizin->jml_izin }}</span>
                             <ion-icon name="newspaper-outline" style="font-size: 1.5rem"
                                 class="text-success mb-1"></ion-icon>
                             <br>
@@ -147,7 +147,7 @@
                     <div class="card">
                         <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 1rem">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 3px; right: 0.6rem; z-index: 999;">0</span>
+                                style="position: absolute; top: 3px; right: 0.6rem; z-index: 999;">{{ $rekapizin->jml_sakit }}</span>
                             <ion-icon name="medkit-outline" style="font-size: 1.5rem"
                                 class="text-danger mb-1"></ion-icon>
                             <br>
