@@ -21,6 +21,7 @@ class Karyawan extends Authenticatable
         'no_hp',
         'password',
         'foto',
+        'kode_dept',
     ];
 
     protected $hidden = [
@@ -32,4 +33,9 @@ class Karyawan extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'kode_dept', 'kode_dept');
+    }
 }
