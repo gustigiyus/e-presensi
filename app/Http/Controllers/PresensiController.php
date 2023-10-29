@@ -33,14 +33,14 @@ class PresensiController extends Controller
         $jam = date("H:i:s");
 
         // LOKASI KANTOR (TITIK RADIUS)
-        // $latitudeKantor = -6.9173248;
-        // $longitudeKantor = 107.610112;
+        $latitudeKantor = -6.916810104499334;
+        $longitudeKantor = 107.79425030729652;
 
         // $latitudeKantor = -6.914289335466438;
         // $longitudeKantor = 107.61169550914718;
 
-        $latitudeKantor = -6.9172307420433965;
-        $longitudeKantor = 107.61005901027413;
+        // $latitudeKantor = -6.9172307420433965;
+        // $longitudeKantor = 107.61005901027413;
 
         // LOKASI USER
         $lokasi = $request->lokasi;
