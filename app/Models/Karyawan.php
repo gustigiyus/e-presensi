@@ -16,6 +16,7 @@ class Karyawan extends Authenticatable
     protected $primaryKey = 'nik';
 
     protected $fillable = [
+        'nik',
         'nama_lengkap',
         'jabatan',
         'no_hp',
@@ -37,5 +38,16 @@ class Karyawan extends Authenticatable
     public function department()
     {
         return $this->belongsTo(Department::class, 'kode_dept', 'kode_dept');
+    }
+
+    public function scopeSearch($query, $nama_lengkap = '', $kode_dept = '')
+    {
+        $query
+            ->when($nama_lengkap, function ($query, $nama_lengkap) {
+                return $query->where('nama_lengkap', 'LIKE', "%$nama_lengkap%");
+            })
+            ->when($kode_dept, function ($query, $kode_dept) {
+                return $query->where('kode_dept', $kode_dept);
+            });
     }
 }
