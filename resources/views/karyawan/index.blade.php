@@ -158,6 +158,43 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $d->department->nama_dept }}</td>
+                                                <td>
+                                                    <div class="d-flex gap-2 justify-content-center">
+                                                        <a href="#" class="edit" nik={{ $d->nik }}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                class="icon icon-tabler icon-tabler-edit" width="24"
+                                                                height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                                stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                                                </path>
+                                                                <path
+                                                                    d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1">
+                                                                </path>
+                                                                <path
+                                                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z">
+                                                                </path>
+                                                                <path d="M16 5l3 3"></path>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="#" class="delete" nik={{ $d->nik }}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                class="icon icon-tabler icon-tabler-trash" width="24"
+                                                                height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                                stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                                                </path>
+                                                                <path d="M4 7l16 0"></path>
+                                                                <path d="M10 11l0 6"></path>
+                                                                <path d="M14 11l0 6"></path>
+                                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
+                                                                </path>
+                                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @endforeach
 
@@ -175,11 +212,12 @@
         </div>
     </div>
 
+    {{-- Modal Input --}}
     <div class="modal modal-blur fade" id="modal-inputkaryawan" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Add Data Karyawan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -295,6 +333,20 @@
             </div>
         </div>
     </div>
+    {{-- Modal Edit --}}
+    <div class="modal modal-blur fade" id="modal-editkaryawan" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Data Karyawan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="loadeditForm">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('myscript')
@@ -304,6 +356,70 @@
             $('#btnAddKar').click(function(e) {
                 e.preventDefault();
                 $('#modal-inputkaryawan').modal("show");
+            });
+
+            $('.delete').click(function(e) {
+                e.preventDefault();
+                let nik = $(this).attr('nik');
+
+                Swal.fire({
+                    title: "Do you want to delete",
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "Save",
+                    denyButtonText: `Don't save`
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/karyawan/delete/" + nik,
+                            cache: false,
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                nik: nik,
+                            },
+                            success: function(response) {
+                                let status = response.success
+                                if (status) {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: status,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1800);
+                                }
+                            }
+                        });
+
+                    } else if (result.isDenied) {
+                        Swal.fire("Changes are not saved", "", "info");
+                    }
+                });
+
+            });
+
+            $('.edit').click(function(e) {
+                e.preventDefault();
+                let nik = $(this).attr('nik');
+                $.ajax({
+                    type: "POST",
+                    url: "/karyawan/edit",
+                    cache: false,
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        nik: nik,
+                    },
+                    success: function(response) {
+                        $('#loadeditForm').html(response);
+                    }
+                });
+                $('#modal-editkaryawan').modal("show");
             });
 
             $('#frmKaryawan').submit(function() {

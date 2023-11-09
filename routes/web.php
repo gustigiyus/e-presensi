@@ -63,4 +63,10 @@ Route::middleware(['auth:user'])->group(function () {
     // Karyawan
     Route::get('/karyawan', [KaryawanController::class, 'index']);
     Route::post('/karyawan/store', [KaryawanController::class, 'store']);
+    Route::post('/karyawan/edit', [KaryawanController::class, 'edit']);
+    Route::post('/karyawan/{nik}/update', [KaryawanController::class, 'update']);
+    Route::delete('/karyawan/delete/{nik}', [KaryawanController::class, 'delete']);
+
+    // Kantor 
+    Route::get('/kantor', [KaryawanController::class, 'index']);
 });
