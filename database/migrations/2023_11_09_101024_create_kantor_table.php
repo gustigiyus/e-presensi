@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kantors', function (Blueprint $table) {
+        Schema::create('kantor', function (Blueprint $table) {
             $table->id();
+            $table->string('nm_kantor', 100)->nullable();
+            $table->string('location', 100)->nullable();
+            $table->text('latitude');
+            $table->text('longitude');
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kantors');
+        Schema::dropIfExists('kantor');
     }
 };

@@ -249,6 +249,9 @@
                                 <a class="dropdown-item" href="/karyawan">
                                     Data Karyawan
                                 </a>
+                                <a class="dropdown-item" href="/kantor">
+                                    Data Kantor
+                                </a>
                             </div>
                         </div>
                     </div>

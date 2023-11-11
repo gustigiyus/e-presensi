@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Kantor extends Model
 {
     use HasFactory;
+
+    protected $table = 'kantor';
+    protected $fillable = [
+        'nm_kantor',
+        'location',
+        'radius',
+        'latitude',
+        'longitude',
+    ];
 }
