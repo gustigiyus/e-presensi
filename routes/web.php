@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KantorController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PresensiController;
 use Illuminate\Support\Facades\Route;
 
@@ -75,4 +76,11 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/kantor/edit/{id}', [KantorController::class, 'edit']);
     Route::post('/kantor/update/{id}', [KantorController::class, 'update']);
     Route::delete('/kantor/destroy/{id}', [KantorController::class, 'destroy']);
+
+    // Pengajuan (Sakit & Izin)
+    //? Sakit  
+    Route::get('/pengajuan/sakit', [PengajuanController::class, 's_index']);
+    Route::post('/pengajuan/sakit/edit', [PengajuanController::class, 's_edit']);
+    Route::post('/pengajuan/sakit/update/{id}', [PengajuanController::class, 's_update']);
+    Route::delete('/pengajuan/sakit/destroy/{id}', [PengajuanController::class, 's_destroy']);
 });
