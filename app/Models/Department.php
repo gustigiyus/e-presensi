@@ -11,14 +11,15 @@ class Department extends Model
     protected $table = 'department';
     protected $primaryKey = 'kode_dept';
     protected $keyType = 'string';
+    public $timestamps = false;
 
     protected $fillable = [
+        'kode_dept',
         'nama_dept',
     ];
 
     public function karyawan()
     {
-
         return $this->hasOne(Karyawan::class, 'kode_dept', 'kode_dept');
     }
 }
