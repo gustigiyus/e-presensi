@@ -91,4 +91,9 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/pengajuan/sakit/edit', [PengajuanController::class, 's_edit']);
     Route::post('/pengajuan/sakit/update/{id}', [PengajuanController::class, 's_update']);
     Route::delete('/pengajuan/sakit/destroy/{id}', [PengajuanController::class, 's_destroy']);
+
+    // Presesni 
+    Route::get('/presensi/monitoring', [PresensiController::class, 'monitoring']);
+    Route::post('/getpresensi', [PresensiController::class, 'getpresensi']);
+    Route::post('/showmaps', [PresensiController::class, 'showmaps']);
 });
