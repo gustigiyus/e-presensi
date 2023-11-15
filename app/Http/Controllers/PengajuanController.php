@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class PengajuanController extends Controller
 {
@@ -25,5 +27,26 @@ class PengajuanController extends Controller
         return view('pengajuan.sakit.edit', [
             'pengajuan' => $pengajuan
         ]);
+    }
+
+    public function s_update(Request $request, $id)
+    {
+        $id = $request->id;
+        $rules = [
+            'status_approved' => 'required',
+            'tgl_approved' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::back()->with(['error' => 'Data gagal diupdate']);
+        }
+
+        $data = Pengajuan::where('id', $id)->update([
+            'status_approved' => $request->input('status_approved'),
+            'tgl_approved' => $request->input('tgl_approved'),
+        ]);
+
+        return redirect('/pengajuan/sakit')->with('status', 'Data berhasil diupdate!');
     }
 }

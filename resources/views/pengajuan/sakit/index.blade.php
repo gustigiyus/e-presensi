@@ -113,10 +113,6 @@
                 <div class="modal-body" id="loadeditForm">
 
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add Team</button>
-                </div>
             </div>
         </div>
     </div>
