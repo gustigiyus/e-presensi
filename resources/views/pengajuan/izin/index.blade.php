@@ -10,7 +10,7 @@
                         Pengajuan
                     </div>
                     <h2 class="page-title">
-                        Pengajuan Sakit
+                        Pengajuan Izin
                     </h2>
                 </div>
             </div>
@@ -107,7 +107,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Form Sakit</h5>
+                    <h5 class="modal-title">Form Izin</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="loadeditForm">
@@ -127,7 +127,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/pengajuan/sakit/edit",
+                    url: "/pengajuan/izin/edit",
                     data: {
                         _token: "{{ csrf_token() }}",
                         id: idAju,

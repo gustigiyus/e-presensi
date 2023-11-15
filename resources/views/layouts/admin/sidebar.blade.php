@@ -288,7 +288,7 @@
                                 <a class="dropdown-item" href="/pengajuan/sakit">
                                     Sakit
                                 </a>
-                                <a class="dropdown-item" href="/kantor">
+                                <a class="dropdown-item" href="/pengajuan/izin">
                                     Izin/Cuti
                                 </a>
                             </div>

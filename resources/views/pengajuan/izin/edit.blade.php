@@ -1,4 +1,4 @@
-<form action="/pengajuan/sakit/update/{{ $pengajuan->id }}" method="POST">
+<form action="/pengajuan/izin/update/{{ $pengajuan->id }}" method="POST">
     @csrf
     <div class="row mb-3 align-items-end">
         <div class="col-3">
