@@ -12,7 +12,7 @@ class PengajuanController extends Controller
     /* MODUL SAKIT */
     public function s_index()
     {
-        $pengajuan = Pengajuan::with('karyawan')->where('status', 's')->get();
+        $pengajuan = Pengajuan::with('karyawan')->where('status', 's')->orderBy('tgl_izin', 'desc')->get();
 
         return view('pengajuan.sakit.index', [
             'pengajuan' => $pengajuan
@@ -50,10 +50,21 @@ class PengajuanController extends Controller
         return redirect('/pengajuan/sakit')->with('status', 'Data berhasil diupdate!');
     }
 
+    public function s_decline(Request $request, $id)
+    {
+        $id = $request->id;
+
+        $data = Pengajuan::where('id', $id)->update([
+            'status_approved' => 0,
+        ]);
+
+        return redirect('/pengajuan/sakit')->with('status', 'Data berhasil diupdate!');
+    }
+
     /* MODUL Izin */
     public function i_index()
     {
-        $pengajuan = Pengajuan::with('karyawan')->where('status', 'i')->get();
+        $pengajuan = Pengajuan::with('karyawan')->where('status', 'i')->orderBy('tgl_izin', 'desc')->get();
 
         return view('pengajuan.izin.index', [
             'pengajuan' => $pengajuan
@@ -86,6 +97,17 @@ class PengajuanController extends Controller
         $data = Pengajuan::where('id', $id)->update([
             'status_approved' => $request->input('status_approved'),
             'tgl_approved' => $request->input('tgl_approved'),
+        ]);
+
+        return redirect('/pengajuan/izin')->with('status', 'Data berhasil diupdate!');
+    }
+
+    public function i_decline(Request $request, $id)
+    {
+        $id = $request->id;
+
+        $data = Pengajuan::where('id', $id)->update([
+            'status_approved' => 0,
         ]);
 
         return redirect('/pengajuan/izin')->with('status', 'Data berhasil diupdate!');

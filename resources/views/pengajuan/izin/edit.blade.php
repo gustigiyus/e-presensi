@@ -21,7 +21,6 @@
         <div class="col-5">
             <div class="form-label">Status Approved</div>
             <select name="status_approved" class="form-select">
-                <option value="0" {{ $pengajuan->status_approved == '0' ? 'selected' : '' }}>Pending</option>
                 <option value="1" {{ $pengajuan->status_approved == '1' ? 'selected' : '' }}>Approved
                 </option>
                 <option value="2" {{ $pengajuan->status_approved == '2' ? 'selected' : '' }}>Decline</option>

@@ -90,11 +90,13 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/pengajuan/sakit', [PengajuanController::class, 's_index']);
     Route::post('/pengajuan/sakit/edit', [PengajuanController::class, 's_edit']);
     Route::post('/pengajuan/sakit/update/{id}', [PengajuanController::class, 's_update']);
+    Route::get('/pengajuan/sakit/decline/{id}', [PengajuanController::class, 's_decline']);
 
     //? Izin  
     Route::get('/pengajuan/izin', [PengajuanController::class, 'i_index']);
     Route::post('/pengajuan/izin/edit', [PengajuanController::class, 'i_edit']);
     Route::post('/pengajuan/izin/update/{id}', [PengajuanController::class, 'i_update']);
+    Route::get('/pengajuan/izin/decline/{id}', [PengajuanController::class, 'i_decline']);
 
     // Presesni 
     Route::get('/presensi/monitoring', [PresensiController::class, 'monitoring']);
