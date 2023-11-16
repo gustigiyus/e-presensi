@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
+use App\Models\Pengajuan;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -273,5 +274,15 @@ class PresensiController extends Controller
         return view('presensi.showmaps', [
             'presensi' => $presensi
         ]);
+    }
+
+    public function cekpengajuanizin(Request $request)
+    {
+        $tgl_izin = $request->tgl_izin;
+        $nik = Auth::guard('karyawan')->user()->nik;
+
+        $cek = Pengajuan::where('nik', $nik)->where('tgl_izin', $tgl_izin)->count();
+
+        return $cek;
     }
 }

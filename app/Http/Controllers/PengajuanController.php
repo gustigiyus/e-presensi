@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Validator;
 class PengajuanController extends Controller
 {
     /* MODUL SAKIT */
-    public function s_index()
+    public function s_index(Request $request)
     {
-        $pengajuan = Pengajuan::with('karyawan')->where('status', 's')->orderBy('tgl_izin', 'desc')->get();
+        $dari = $request->dari;
+        $sampai = $request->sampai;
+        $nik = $request->nik;
+        $nama_karyawan = $request->nama_karyawan;
+        $status_approved = $request->status_approved;
+
+        $pengajuan = Pengajuan::with('karyawan')
+            ->search($dari, $sampai, $nik, $nama_karyawan, $status_approved)
+            ->where('status', 's')->orderBy('tgl_izin', 'desc')->paginate(2)->appends($request->all());
 
         return view('pengajuan.sakit.index', [
             'pengajuan' => $pengajuan
@@ -62,9 +70,17 @@ class PengajuanController extends Controller
     }
 
     /* MODUL Izin */
-    public function i_index()
+    public function i_index(Request $request)
     {
-        $pengajuan = Pengajuan::with('karyawan')->where('status', 'i')->orderBy('tgl_izin', 'desc')->get();
+        $dari = $request->dari;
+        $sampai = $request->sampai;
+        $nik = $request->nik;
+        $nama_karyawan = $request->nama_karyawan;
+        $status_approved = $request->status_approved;
+
+        $pengajuan = Pengajuan::with('karyawan')
+            ->search($dari, $sampai, $nik, $nama_karyawan, $status_approved)
+            ->where('status', 'i')->orderBy('tgl_izin', 'desc')->paginate(2)->appends($request->all());
 
         return view('pengajuan.izin.index', [
             'pengajuan' => $pengajuan
@@ -75,7 +91,8 @@ class PengajuanController extends Controller
     {
         $id = $request->id;
 
-        $pengajuan = Pengajuan::with('karyawan')->where('id', $id)->first();
+        $pengajuan = Pengajuan::with('karyawan')
+            ->where('id', $id)->first();
         return view('pengajuan.izin.edit', [
             'pengajuan' => $pengajuan
         ]);
