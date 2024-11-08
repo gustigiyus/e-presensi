@@ -11,7 +11,6 @@ class Department extends Model
     protected $table = 'department';
     protected $primaryKey = 'kode_dept';
     protected $keyType = 'string';
-    public $timestamps = false;
 
     protected $fillable = [
         'kode_dept',

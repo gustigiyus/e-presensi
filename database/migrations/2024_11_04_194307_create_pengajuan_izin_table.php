@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('presensi', function (Blueprint $table) {
+        Schema::create('pengajuan_izin', function (Blueprint $table) {
             $table->id();
             $table->string('nik', 100)->nullable();
             $table->date('tgl_izin')->nullable();
-            $table->boolean('status')->nullable()->default(false);
-            $table->time('keterangan')->nullable();
-            $table->boolean('status_approved')->nullable()->default(false);
+            $table->char('status', 1)->nullable()->comment('i: Izin, s: Sakit');
+            $table->text('keterangan')->nullable();
+            $table->integer('status_approved')->nullable()->default(1)->comment('0: Pending, 1: Disetujui, 2: Ditolak');
             $table->date('tgl_approved')->nullable();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('presensi');
+        Schema::dropIfExists('pengajuan_izin');
     }
 };

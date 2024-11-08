@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('location', 100)->nullable();
             $table->text('latitude');
             $table->text('longitude');
+            $table->integer('radius');
             $table->timestamps();
         });
     }

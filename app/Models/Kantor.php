@@ -13,8 +13,8 @@ class Kantor extends Model
     protected $fillable = [
         'nm_kantor',
         'location',
-        'radius',
         'latitude',
         'longitude',
+        'radius',
     ];
 }
