@@ -15,6 +15,11 @@
                 <h2 id="user-name">{{ Auth::guard('karyawan')->user()->nama_lengkap }}</h2>
                 <span id="user-role">{{ Auth::guard('karyawan')->user()->jabatan }}</span>
             </div>
+            <div class="logout-button-user ml-auto">
+                <a href="/proseslogout" style="font-size: 40px;">
+                    <ion-icon name="log-out-outline" style="color: red;"></ion-icon>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -117,7 +122,7 @@
         </div>
 
         <div id="recappresensi">
-            <h3>Rekap Presensi Bulan {{ $namabln[$bulanini] }} Tahun {{ $tahunini }}</h3>
+            <h3>Presensi Bulan {{ $namabln[$bulanini] }} Tahun {{ $tahunini }}</h3>
             <div class="row">
                 <div class="col-3">
                     <div class="card">

@@ -152,12 +152,24 @@ class PresensiController extends Controller
 
         $dt_karyawan = Karyawan::where('nik', $nik)->first();
 
+        // Check if the photo exists in the database and delete it if necessary
         if ($request->hasFile('foto')) {
+            // Define the path where photos are stored
+            $folderPath = 'public/upload/karyawan/';
+
+            // If the previous photo exists, delete it
+            if ($dt_karyawan->foto && file_exists(storage_path('app/' . $folderPath . $dt_karyawan->foto))) {
+                unlink(storage_path('app/' . $folderPath . $dt_karyawan->foto)); // Delete the old photo
+            }
+
+            // Set the new photo name based on NIK and extension
             $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
         } else {
+            // Use the existing photo if no new one is uploaded
             $foto = $dt_karyawan->foto;
         }
 
+        // Prepare the data to be updated
         if (empty($request->password)) {
             $data = [
                 'nama_lengkap' => $nama_lengkap,
@@ -173,10 +185,11 @@ class PresensiController extends Controller
             ];
         }
 
+        // Update the data in the database
         $update = Karyawan::where('nik', $nik)->update($data);
         if ($update) {
+            // If a new photo was uploaded, store it
             if ($request->hasFile('foto')) {
-                $folderPath = 'public/upload/karyawan';
                 $request->file('foto')->storeAs($folderPath, $foto);
             }
 
