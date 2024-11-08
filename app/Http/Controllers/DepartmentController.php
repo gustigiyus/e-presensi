@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Validator;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $dept = Department::get();

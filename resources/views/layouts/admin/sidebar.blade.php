@@ -247,6 +247,9 @@
                                 <a class="dropdown-item" href="/karyawan">
                                     Management Users
                                 </a>
+                                <a href="/jabatan" class="dropdown-item" href="/karyawan">
+                                    Jabatan
+                                </a>
                             </div>
                         </div>
                     </div>

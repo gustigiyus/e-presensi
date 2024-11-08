@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('karyawan', function (Blueprint $table) {
             $table->string('nik', 100)->primary();
             $table->string('nama_lengkap', 100);
-            $table->string('jabatan', 20);
+            $table->string('jabatan')->nullable();
             $table->string('no_hp', 13);
             $table->string('foto', 255)->nullable();
             $table->string('password', 255);

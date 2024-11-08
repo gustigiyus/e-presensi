@@ -10,7 +10,7 @@
                         Master Data
                     </div>
                     <h2 class="page-title">
-                        Data Department
+                        Data Jabatan
                     </h2>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                                     <path d="M12 5l0 14"></path>
                                     <path d="M5 12l14 0"></path>
                                 </svg>
-                                Tambah Department
+                                Tambah Jabatan
                             </a>
                         </div>
                     </div>
@@ -89,26 +89,30 @@
                                     <thead>
                                         <tr>
                                             <th>NO</th>
-                                            <th>KODE DEPARTMENT</th>
-                                            <th>NAMA DEPARTMENT</th>
+                                            <th>NAMA JABATAN</th>
+                                            <th>GAJI POKOK</th>
+                                            <th>DESKRIPSI</th>
                                             <th style="width: 7%; text-align: center">
-                                                Aksi
+                                                AKSI
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($dept as $d)
+                                        @foreach ($jabatan as $d)
                                             <tr>
                                                 <td><span class="text-black">{{ $loop->iteration }}.</span></td>
                                                 <td class="text-secondary">
-                                                    {{ $d->kode_dept }}
+                                                    {{ $d->nama_jabatan }}
                                                 </td>
                                                 <td class="text-secondary">
-                                                    {{ $d->nama_dept }}
+                                                    {{ $d->gaji_pokok }}
+                                                </td>
+                                                <td class="text-secondary">
+                                                    {{ $d->deskripsi }}
                                                 </td>
                                                 <td style="text-align: center">
                                                     <div class="d-flex gap-2 justify-content-center">
-                                                        <a href="#" class="edit" kode_dept={{ $d->kode_dept }}>
+                                                        <a href="#" class="edit" id_jabatan={{ $d->id }}>
                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                 class="icon icon-tabler icon-tabler-edit" width="24"
                                                                 height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -125,7 +129,7 @@
                                                                 <path d="M16 5l3 3"></path>
                                                             </svg>
                                                         </a>
-                                                        <a href="#" class="delete" kode_dept={{ $d->kode_dept }}>
+                                                        <a href="#" class="delete" id_jabatan={{ $d->id }}>
                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                 class="icon icon-tabler icon-tabler-trash text-red"
                                                                 width="24" height="24" viewBox="0 0 24 24"
@@ -157,52 +161,56 @@
     </div>
 
     {{-- Modal Input --}}
-    <div class="modal modal-blur fade" id="modal-inputdepartment" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-inputjabatan" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Data Department</h5>
+                    <h5 class="modal-title">Add Jabatan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/department/store" method="POST" id="frmDepartment" enctype="multipart/form-data">
+                    <form action="/jabatan/store" method="POST" id="frmJabatan" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-barcode"
-                                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                        stroke="currentColor" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M4 7v-1a2 2 0 0 1 2 -2h2"></path>
-                                        <path d="M4 17v1a2 2 0 0 0 2 2h2"></path>
-                                        <path d="M16 4h2a2 2 0 0 1 2 2v1"></path>
-                                        <path d="M16 20h2a2 2 0 0 0 2 -2v-1"></path>
-                                        <path d="M5 11h1v2h-1z"></path>
-                                        <path d="M10 11l0 2"></path>
-                                        <path d="M14 11h1v2h-1z"></path>
-                                        <path d="M19 11l0 2"></path>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-tie">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M12 22l4 -4l-2.5 -11l.993 -2.649a1 1 0 0 0 -.936 -1.351h-3.114a1 1 0 0 0 -.936 1.351l.993 2.649l-2.5 11l4 4z" />
+                                        <path d="M10.5 7h3l5 5.5" />
                                     </svg>
                                 </span>
-                                <input type="text" name="kode_dept" id="kode_dept" class="form-control"
-                                    placeholder="Kode Depertment">
+                                <input type="text" name="nama_jabatan" id="nama_jabatan" class="form-control"
+                                    placeholder="Nama Jabatan">
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user"
-                                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                        stroke="currentColor" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-cash-banknote">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                        <path
+                                            d="M3 6m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                        <path d="M18 12l.01 0" />
+                                        <path d="M6 12l.01 0" />
                                     </svg>
                                 </span>
-                                <input type="text" name="nama_dept" id="nama_dept" class="form-control"
-                                    placeholder="Nama Department">
+                                <input type="text" name="gaji_pokok" id="gaji_pokok" class="form-control"
+                                    placeholder="Gaji Pokok">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-icon mb-3">
+                                <textarea type="text" rows="4" name="deskripsi" id="deskripsi" class="form-control"
+                                    placeholder="Deskripsi"></textarea>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -224,12 +232,13 @@
             </div>
         </div>
     </div>
+
     {{-- Modal Edit --}}
-    <div class="modal modal-blur fade" id="modal-editDepartment" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-editJabatan" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Data Department</h5>
+                    <h5 class="modal-title">Edit Data Jabatan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="loadeditForm">
@@ -246,12 +255,12 @@
 
             $('#btnAddKar').click(function(e) {
                 e.preventDefault();
-                $('#modal-inputdepartment').modal("show");
+                $('#modal-inputjabatan').modal("show");
             });
 
             $('.delete').click(function(e) {
                 e.preventDefault();
-                let kode_dept = $(this).attr('kode_dept');
+                let id_jabatan = $(this).attr('id_jabatan');
 
                 Swal.fire({
                     title: "Do you want to delete",
@@ -264,11 +273,11 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "DELETE",
-                            url: "/department/destroy/" + kode_dept,
+                            url: "/jabatan/destroy/" + id_jabatan,
                             cache: false,
                             data: {
                                 _token: "{{ csrf_token() }}",
-                                kode_dept: kode_dept,
+                                id_jabatan: id_jabatan,
                             },
                             success: function(response) {
                                 let status = response.success
@@ -297,50 +306,51 @@
 
             $('.edit').click(function(e) {
                 e.preventDefault();
-                let kode_dept = $(this).attr('kode_dept');
+                let id_jabatan = $(this).attr('id_jabatan');
                 $.ajax({
                     type: "POST",
-                    url: "/department/edit",
+                    url: "/jabatan/edit",
                     cache: false,
                     data: {
                         _token: "{{ csrf_token() }}",
-                        kode_dept: kode_dept,
+                        id_jabatan: id_jabatan,
                     },
                     success: function(response) {
                         $('#loadeditForm').html(response);
                     }
                 });
-                $('#modal-editDepartment').modal("show");
+                $('#modal-editJabatan').modal("show");
             });
 
-            $('#frmDepartment').submit(function() {
-                let kode_dept = $('#kode_dept').val()
-                let nama_dept = $('#nama_dept').val()
 
-                if (kode_dept == '') {
+            $('#frmJabatan').submit(function() {
+                let id_jabatan = $('#id_jabatan').val()
+                let nama_jabatan = $('#nama_jabatan').val()
+                let gaji_pokok = $('#gaji_pokok').val()
+
+                if (nama_jabatan == '') {
                     Swal.fire({
                         title: 'Oops!',
-                        text: 'Kode Department Harus Diisi',
+                        text: 'Nama Jabatan Harus Diisi',
                         icon: 'warning',
                         confirmButtonText: 'Ok'
                     }).then(() => {
-                        $('#kode_dept').focus()
+                        $('#nama_jabatan').focus()
                     })
 
                     return false
-                } else if (nama_dept == '') {
+                } else if (gaji_pokok == '') {
                     Swal.fire({
                         title: 'Oops!',
-                        text: 'Nama Department Harus Diisi',
+                        text: 'Gaji Pokok Harus Diisi',
                         icon: 'warning',
                         confirmButtonText: 'Ok'
                     }).then(() => {
-                        $('#nama_dept').focus()
+                        $('#gaji_pokok').focus()
                     })
 
                     return false
                 }
-
             });
         });
     </script>
